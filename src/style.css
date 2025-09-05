@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+/* Author Name: Kunal Sarkar */
+/* Company Name: Prodisto Technology Private Limited */
+
+
+/* Font and color variables for global use */
+:root {
+  --font-primary: "Montserrat", sans-serif;
+  --font-secondary: "Lato", sans-serif;
+  --font-tertiary: "Great Vibes", cursive;
+
+  --color-primary: #6E2B6B; /* PANTONE 512 C */
+  --color-secondary: #C49D57; /* PANTONE 7407 C */
+  --color-beige: #F5F5DC; /* Beige */
+  --color-text-primary: #212121; /* Dark Text */
+  --color-text-secondary: #666666; /* Light Text */
+
+  --background-light: #F5F5F5; /* Off-white Background */
+
+}
+
+
+/* Apply fonts globally */
+body {
+  font-family: var(--font-secondary);
+  color: var(--color-text-secondary);
+}
+
+
+/* Font Style classes */
+.font-primary {
+  font-family: var(--font-primary);
+}
+
+.font-tertiary {
+  font-family: var(--font-tertiary);
+}
+
+
+/* Font Color classes */
+.text-orange {
+  color: var(--color-orange);
+}
+
+.text-green {
+  color: var(--color-green);
+}
+
+.text-dark {
+  color: var(--color-text-primary);
+}
+
+
+/* Background Color classes */
+.bg-orange {
+  background-color: var(--color-orange);
+}
+
+.bg-green {
+  background-color: var(--color-green);
+}
+
+.bg-beige {
+  background-color: var(--color-beige);
+}
+
+
+/* Hover Button Color classes */
+.hover-bg-orange:hover {
+  background-color: var(--color-orange);
+  color: white;
+}
+
+.hover-bg-green:hover {
+  background-color: var(--color-green);
+  color: white;
+}
+
+.hover-bg-beige:hover {
+  background-color: var(--color-beige);
+}
+
+/* Hover Text Color classes */
+.hover-text-orange:hover {
+  color: var(--color-orange);
+}
+
+.hover-text-green:hover {
+  color: var(--color-green);
+}
+
+.hover-text-beige:hover {
+  color: var(--color-beige);
+}
+
+
+/* Border Color classes */
+.border-orange {
+  border-color: var(--color-orange);
+}
+
+.border-green {
+  border-color: var(--color-green);
+}
+
+.border-beige {
+  border-color: var(--color-beige);
+}
+
+.border-light {
+  border-color: #e5e5e5;
+}
+
+/* Focus Color classes */
+.focus-green:focus {
+  outline: 2px solid var(--color-green);
+  outline-offset: 2px;
+}
+
+.focus-orange:focus {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 2px;
+}
+
+.focus-beige:focus {
+  outline: 2px solid var(--color-beige);
+  outline-offset: 2px;
+}
+
+
+/* Tailwind utility classes for navigation (global, not scoped) */
+
+
