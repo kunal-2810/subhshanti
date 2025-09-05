@@ -11,14 +11,12 @@
   --font-secondary: "Lato", sans-serif;
   --font-tertiary: "Great Vibes", cursive;
 
-  --color-primary: #6E2B6B; /* PANTONE 512 C */
-  --color-secondary: #C49D57; /* PANTONE 7407 C */
-  --color-beige: #F5F5DC; /* Beige */
+  --color-primary: #833375; /* PANTONE 512 C */
+  --color-secondary: #cb9e51; /* PANTONE 7407 C */
+  --color-primary-light: #EAB8D1; /* PANTONE 512 C */
+  --color-secondary-light: #E6CBA8; /* PANTONE 7407 C */
   --color-text-primary: #212121; /* Dark Text */
-  --color-text-secondary: #666666; /* Light Text */
-
-  --background-light: #F5F5F5; /* Off-white Background */
-
+  --color-text-secondary: #6a6a6a; /* Light Text */
 }
 
 
@@ -40,95 +38,104 @@ body {
 
 
 /* Font Color classes */
-.text-orange {
-  color: var(--color-orange);
-}
-
-.text-green {
-  color: var(--color-green);
-}
-
-.text-dark {
+.text-primary {
   color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
 }
 
 
 /* Background Color classes */
-.bg-orange {
-  background-color: var(--color-orange);
+.bg-primary {
+  background-color: var(--color-primary);
 }
 
-.bg-green {
-  background-color: var(--color-green);
+.bg-secondary {
+  background-color: var(--color-secondary);
 }
 
-.bg-beige {
-  background-color: var(--color-beige);
+.bg-primary-light {
+  background-color: var(--color-primary-light);
+}
+
+.bg-secondary-light {
+  background-color: var(--color-secondary-light);
 }
 
 
 /* Hover Button Color classes */
-.hover-bg-orange:hover {
-  background-color: var(--color-orange);
-  color: white;
+.hover-bg-primary:hover {
+  background-color: var(--color-primary);
 }
 
-.hover-bg-green:hover {
-  background-color: var(--color-green);
-  color: white;
+.hover-bg-secondary:hover {
+  background-color: var(--color-secondary);
 }
 
-.hover-bg-beige:hover {
-  background-color: var(--color-beige);
+.hover-bg-primary-light:hover {
+  background-color: var(--color-primary-light);
+}
+
+.hover-bg-secondary-light:hover {
+  background-color: var(--color-secondary-light);
 }
 
 /* Hover Text Color classes */
-.hover-text-orange:hover {
-  color: var(--color-orange);
+.hover-text-primary:hover {
+  color: var(--color-primary);
 }
 
-.hover-text-green:hover {
-  color: var(--color-green);
+.hover-text-secondary:hover {
+  color: var(--color-secondary);
 }
 
-.hover-text-beige:hover {
-  color: var(--color-beige);
+.hover-text-primary-light:hover {
+  color: var(--color-primary-light);
 }
 
+.hover-text-secondary-light:hover {
+  color: var(--color-secondary-light);
+}
 
 /* Border Color classes */
-.border-orange {
-  border-color: var(--color-orange);
+.border-primary {
+  border-color: var(--color-primary);
 }
 
-.border-green {
-  border-color: var(--color-green);
+.border-secondary {
+  border-color: var(--color-secondary);
 }
 
-.border-beige {
-  border-color: var(--color-beige);
+.border-primary-light {
+  border-color: var(--color-primary-light);
 }
 
-.border-light {
-  border-color: #e5e5e5;
+.border-secondary-light {
+  border-color: var(--color-secondary-light);
 }
 
 /* Focus Color classes */
-.focus-green:focus {
-  outline: 2px solid var(--color-green);
+.focus-primary:focus {
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-.focus-orange:focus {
-  outline: 2px solid var(--color-orange);
+.focus-secondary:focus {
+  outline: 2px solid var(--color-secondary);
   outline-offset: 2px;
 }
 
-.focus-beige:focus {
-  outline: 2px solid var(--color-beige);
+.focus-primary-light:focus {
+  outline: 2px solid var(--color-primary-light);
   outline-offset: 2px;
 }
 
+.focus-secondary-light:focus {
+  outline: 2px solid var(--color-secondary-light);
+  outline-offset: 2px;
+}
 
 /* Tailwind utility classes for navigation (global, not scoped) */
 
