@@ -80,6 +80,7 @@ body {
 
 .hover-bg-secondary:hover {
   background-color: var(--color-secondary);
+  color: var(--color-text-primary);
 }
 
 .hover-bg-primary-light:hover {

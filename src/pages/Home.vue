@@ -1,10 +1,19 @@
 <template>
-  <div>
-    <h2>Home Page</h2>
-    <Breadcrumb />
-    <!-- Add home content here -->
-  </div>
+
+
+
+
+<Blogs />
+
+
 </template>
 <script setup lang="ts">
-import Breadcrumb from '../components/Breadcrumb.vue';
+import Blogs from '../components/Blogs.vue';
+
+
+
+
+
+
+
 </script>

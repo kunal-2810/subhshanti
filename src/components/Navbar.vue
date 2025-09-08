@@ -48,6 +48,7 @@
               </div>
             </transition>
           </div>
+          <a href="#" class="text-lg font-medium text-gray-700 hover:text-yellow-700">About Us</a>
           <!-- Explore (WITH relative class) -->
           <div
             v-if="menus[1]"
@@ -89,7 +90,7 @@
               </div>
             </transition>
           </div>
-          <a href="#" class="text-lg font-medium text-gray-700 hover:text-yellow-700">About Us</a>
+          <a href="#" class="text-lg font-medium text-purple hover:text-yellow-700">NRI Zone</a>
         </div>
         <!-- Login Button -->
         <button class="flex items-center bg-primary text-white rounded-full px-6 py-2 shadow hover:bg-purple-800 transition">
@@ -170,6 +171,9 @@
                 </div>
               </transition>
             </li>
+            <li class="mb-2">
+              <a href="#" class="block py-2 text-lg">About</a>
+            </li>
             <!-- Explore (mobile) -->
             <li class="mb-2">
               <div class="flex items-center justify-between py-2">
@@ -211,9 +215,6 @@
             </li>
             <!-- Other Menus -->
             <li class="mb-2">
-              <a href="#" class="block py-2 text-lg">About</a>
-            </li>
-            <li class="mb-2">
               <a href="#" class="block py-2 text-lg font-medium text-purple">NRI Zone</a>
             </li>
           </ul>
@@ -221,18 +222,18 @@
         <!-- Fixed Bottom Contact/Social -->
         <div class="border-t px-6 py-4 bg-white">
           <div class="flex items-center mb-2">
-            <img src="@/assets/icons/phone.svg" alt="Phone" class="w-5 h-5 mr-2" />
+            <img src="@/assets/icons/phone.svg" alt="Phone" class="w-6 h-6 mr-2" />
             <span class="font-medium text-gray-700">+91 12345 67890</span>
           </div>
           <div class="flex items-center mb-2">
-            <img src="@/assets/icons/mail.svg" alt="Email" class="w-5 h-5 mr-2" />
+            <img src="@/assets/icons/mail.svg" alt="Email" class="w-6 h-6 mr-2" />
             <span class="font-medium text-gray-700">info@subhshanti.com</span>
           </div>
-          <div class="flex space-x-4 mt-2">
-            <a href="#" target="_blank"><img src="@/assets/icons/facebook.svg" class="w-5 h-5" /></a>
-            <a href="#" target="_blank"><img src="@/assets/icons/instagram.svg" class="w-5 h-5" /></a>
-            <a href="#" target="_blank"><img src="@/assets/icons/linkedin.svg" class="w-5 h-5" /></a>
-            <a href="#" target="_blank"><img src="@/assets/icons/youtube.svg" class="w-5 h-5" /></a>
+          <div class="flex space-x-4 mt-4">
+            <a href="#" target="_blank"><img src="@/assets/icons/facebook.svg" class="w-6 h-6" /></a>
+            <a href="#" target="_blank"><img src="@/assets/icons/instagram.svg" class="w-6 h-6" /></a>
+            <a href="#" target="_blank"><img src="@/assets/icons/linkedin.svg" class="w-6 h-6" /></a>
+            <a href="#" target="_blank"><img src="@/assets/icons/youtube.svg" class="w-6 h-6" /></a>
           </div>
         </div>
       </aside>
