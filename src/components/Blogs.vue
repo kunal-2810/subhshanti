@@ -73,7 +73,7 @@
     </div>
 
     <!-- CTA Button -->
-    <a href="/blogs" class="inline-block bg-primary text-white px-6 py-3 rounded-full hover-bg-secondary transition">
+    <a href="/blogs" class="inline-block bg-primary text-white px-16 py-3 rounded-full hover-bg-secondary transition">
       Read Our Blogs
     </a>
   </div>
