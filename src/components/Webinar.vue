@@ -99,7 +99,7 @@ let intervalId: number | undefined
 onMounted(() => {
   intervalId = window.setInterval(() => {
     currentIndex.value = (currentIndex.value + 1) % webinars.length
-  }, 10000)
+  }, 5000)
 })
 
 onBeforeUnmount(() => {
