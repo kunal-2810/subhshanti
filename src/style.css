@@ -46,6 +46,14 @@ body {
   color: var(--color-text-secondary);
 }
 
+.text-purple {
+  color: var(--color-primary);
+}
+
+.text-gold {
+  color: var(--color-secondary);
+}
+
 
 /* Background Color classes */
 .bg-primary {
