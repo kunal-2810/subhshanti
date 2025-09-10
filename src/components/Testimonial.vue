@@ -5,11 +5,11 @@
       <h2 class="text-2xl md:text-[32px] font-primary text-primary text-center leading-snug font-bold mb-8">Our Testimonials</h2>
       <!-- Testimonial Panels -->
       <div class="flex flex-col lg:flex-row rounded-3xl overflow-hidden">
-        <!-- Left: Video/Image (fixed, larger size, vertically centered) -->
-        <div class="lg:w-1/2 flex items-center justify-center p-8">
+        <!-- Left: Video/Image (full width/height on all devices) -->
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-0">
           <div
-            class="relative w-full max-w-xl aspect-video rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center"
-            style="min-height: 320px;"
+            class="relative w-full aspect-video rounded-none lg:rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center"
+            style="min-height: 220px; height: 100%;"
           >
             <template v-if="currentTestimonial.videoUrl">
               <div class="w-full h-full flex items-center justify-center">
@@ -19,7 +19,8 @@
                     frameborder="0"
                     allow="autoplay; encrypted-media"
                     allowfullscreen
-                    class="w-full h-full rounded-2xl"
+                    class="w-full h-full"
+                    style="min-height:220px;"
                   ></iframe>
                 </template>
                 <template v-else>
@@ -55,31 +56,32 @@
             </template>
           </div>
         </div>
-        <!-- Right: Testimonial Content (reduced gap above Subhshanti feedback) -->
-        <div class="lg:w-1/2 flex flex-col justify-between p-6 md:p-10 min-h-[320px]">
-          <div class="flex-1 flex flex-col justify-center">
+        <!-- Right: Testimonial Content (minimal gap above Subhshanti feedback) -->
+        <div class="w-full lg:w-1/2 flex flex-col justify-between p-6 md:p-10 min-h-[220px]">
+          <div>
             <!-- Feedback (quote) -->
-            <blockquote class="text-xl md:text-2xl italic text-gray-700 mb-4">
+            <blockquote class="text-xl md:text-2xl italic text-primary mb-4">
               “{{ currentTestimonial.feedback }}”
             </blockquote>
             <!-- Detailed review -->
-            <p class="text-gray-700 mb-4">
+            <p class="mb-4 text-gray-600">
               {{ currentTestimonial.review }}
             </p>
             <!-- Client info -->
-            <div class="text-gray-700 mb-2">
+            <div class="text-primary mb-2">
               — <span class="font-semibold">{{ currentTestimonial.name }}</span
               >, {{ currentTestimonial.designation }}, {{ currentTestimonial.sector }}
             </div>
           </div>
-          <!-- Subhshanti feedback: reduced margin-top -->
-          <div class="flex items-center gap-4 mt-2">
+          <!-- Subhshanti feedback: minimal margin-top, fixed logo size -->
+          <div class="flex items-center gap-4 mt-1">
             <img
               src="@/assets/images/logo-icon.webp"
               alt="Subhshanti Logo"
-              class="w-10 h-10"
+              style="width: 40px; height: 40px;"
+              class="object-contain"
             />
-            <span class="text-gray-700 text-base">
+            <span class="text-base text-gray-600">
               "{{ currentTestimonial.subhshantiFeedback }}"
             </span>
           </div>
@@ -105,16 +107,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed, watch, nextTick } from 'vue'
 import testimonialImage1 from '@/assets/images/testimonial.webp'
 import testimonialImage2 from '@/assets/images/testimonial.webp'
 import testimonialImage3 from '@/assets/images/testimonial.webp'
 
-// One testimonial has no image to show the placeholder
+declare global {
+  interface Window {
+    YT: any
+    onYouTubeIframeAPIReady: () => void
+  }
+}
+
 const testimonials = [
   {
     image: testimonialImage1,
-    videoUrl: '',
+    videoUrl: 'https://www.youtube.com/watch?v=aqz-KE-bpKQ&t',
     feedback: 'Subhshanti made my investment journey simple, transparent, and rewarding.',
     review:
       'When I first approached Subhshanti, I had no clear strategy for my capital. Their expert guidance not only helped me grow my portfolio but also gave me confidence in my decisions. The process was professional, personalised, and result-driven.',
@@ -153,6 +161,7 @@ const testimonials = [
 const currentIndex = ref(0)
 const intervalId = ref<any>(null)
 const showVideo = ref(false)
+const ytPlayer = ref<any>(null)
 
 const currentTestimonial = computed(() => testimonials[currentIndex.value])
 
@@ -165,25 +174,22 @@ function goTo(idx: number) {
 function next() {
   currentIndex.value = (currentIndex.value + 1) % testimonials.length
   showVideo.value = false
+  resetInterval() // Ensure the slider resumes after advancing
 }
 
 function resetInterval() {
   if (intervalId.value) clearInterval(intervalId.value)
-  intervalId.value = setInterval(next, 5000)
+  if (!showVideo.value) {
+    intervalId.value = setInterval(next, 5000)
+  }
 }
 
-onMounted(() => {
-  intervalId.value = setInterval(next, 5000)
-})
-
-onBeforeUnmount(() => {
-  if (intervalId.value) clearInterval(intervalId.value)
-})
-
-// Reset video when testimonial changes
-watch(currentIndex, () => {
-  showVideo.value = false
-})
+function stopInterval() {
+  if (intervalId.value) {
+    clearInterval(intervalId.value)
+    intervalId.value = null
+  }
+}
 
 function youtubeEmbedUrl(url: string) {
   // Extract video ID from YouTube URL
@@ -192,7 +198,89 @@ function youtubeEmbedUrl(url: string) {
   )
   const videoId = match ? match[1] : ''
   return videoId
-    ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`
+    ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&enablejsapi=1`
     : ''
 }
+
+// --- YouTube API logic ---
+function loadYouTubeAPI() {
+  return new Promise<void>((resolve) => {
+    if (window.YT && window.YT.Player) {
+      resolve()
+      return
+    }
+    if (document.getElementById('youtube-iframe-api')) {
+      const check = setInterval(() => {
+        if (window.YT && window.YT.Player) {
+          clearInterval(check)
+          resolve()
+        }
+      }, 100)
+      return
+    }
+    const tag = document.createElement('script')
+    tag.id = 'youtube-iframe-api'
+    tag.src = "https://www.youtube.com/iframe_api"
+    document.body.appendChild(tag)
+    window.onYouTubeIframeAPIReady = () => resolve()
+  })
+}
+
+function onPlayerStateChange(event: any) {
+  // 0 means ended
+  if (event.data === 0) {
+    showVideo.value = false
+    next() // This will advance to the next testimonial and reset the slider interval
+  }
+}
+
+async function createYouTubePlayer() {
+  stopInterval()
+  await nextTick()
+  setTimeout(() => {
+    if (ytPlayer.value) {
+      ytPlayer.value.destroy()
+      ytPlayer.value = null
+    }
+    const iframe = document.querySelector<HTMLIFrameElement>('iframe')
+    if (iframe && iframe.src.includes('youtube.com')) {
+      ytPlayer.value = new window.YT.Player(iframe, {
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      })
+    }
+  }, 200)
+}
+
+// --- Watchers ---
+watch(showVideo, async (val) => {
+  if (val) {
+    stopInterval()
+    if (currentTestimonial.value.videoUrl) {
+      await loadYouTubeAPI()
+      createYouTubePlayer()
+    }
+  } else {
+    if (ytPlayer.value) {
+      ytPlayer.value.destroy()
+      ytPlayer.value = null
+    }
+    resetInterval()
+  }
+})
+
+watch(currentIndex, () => {
+  showVideo.value = false
+})
+
+// --- Lifecycle ---
+onMounted(() => {
+  resetInterval()
+})
+
+onBeforeUnmount(() => {
+  stopInterval()
+  if (ytPlayer.value) ytPlayer.value.destroy()
+})
 </script>

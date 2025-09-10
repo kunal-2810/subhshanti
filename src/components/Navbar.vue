@@ -1,5 +1,9 @@
 <template>
-  <nav class="w-full bg-white shadow z-50 relative">
+  <nav
+    class="w-full bg-white shadow z-50 transition-transform duration-500 ease-in-out"
+    :class="[{ 'fixed top-0 left-0': true }]"
+    :style="navbarStyle"
+  >
     <div class="w-full mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8">
       <!-- Logo -->
       <div class="flex-shrink-0 flex items-center py-2">
@@ -9,8 +13,8 @@
       <!-- Desktop Menu -->
       <div class="hidden lg:flex items-center flex-1 justify-end space-x-8">
         <div class="flex space-x-6">
-          <!-- What We Cover (NO relative class) -->
-          <div v-if="menus[0]" :key="menus[0].title">
+          <!-- What We Cover -->
+          <div v-if="menus[0]" :key="menus[0].title" class="relative">
             <button
               class="flex items-center text-lg font-medium transition-colors"
               :class="{'text-yellow-600': openDropdown === menus[0].title, 'text-gray-700': openDropdown !== menus[0].title}"
@@ -22,11 +26,12 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
               </svg>
             </button>
-            <!-- Mega Dropdown for "What We Cover" -->
+          </div>
+          <!-- Mega Dropdown for "What We Cover" -->
             <transition name="fade">
               <div
                 v-if="openDropdown === menus[0].title"
-                class="absolute left-0 top-full mt-4 w-screen max-w-none bg-white rounded-xl shadow-lg p-8 flex z-50 overflow-x-auto"
+                class="absolute left-0 top-full mt-1 w-screen max-w-none bg-white rounded-xl shadow-lg p-8 flex z-50 overflow-x-auto"
                 style="min-width:320px;"
                 @click.stop
               >
@@ -47,7 +52,6 @@
                 </div>
               </div>
             </transition>
-          </div>
           <a href="#" class="text-lg font-medium text-gray-700 hover:text-yellow-700">About Us</a>
           <!-- Explore (WITH relative class) -->
           <div
@@ -70,7 +74,7 @@
             <transition name="fade">
               <div
                 v-if="openDropdown === menus[1].title"
-                class="absolute left-0 top-full mt-4 w-56 bg-white rounded-xl shadow-lg p-4 flex flex-col z-50"
+                class="absolute left-0 top-full mt-8 w-56 bg-white rounded-xl shadow-lg p-4 flex flex-col z-50"
                 @click.stop
               >
                 <ul>
@@ -239,10 +243,15 @@
       </aside>
     </transition>
   </nav>
+
+  <!-- Main content area, push down by navbar height -->
+  <main class="pt-[68px]">
+    <!-- Your main content goes here -->
+  </main>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 
 // Desktop/Large menus (unchanged)
 const menus = [
@@ -383,6 +392,42 @@ const openDropdown = ref(null)
 const drawerOpen = ref(false)
 const mobileOpenMenus = ref([])
 
+// Sticky on scroll up logic with smooth transition
+const isSticky = ref(true)
+const navbarVisible = ref(true)
+const navbarOffset = ref(0)
+let lastScrollY = window.scrollY
+let ticking = false
+
+function onScroll() {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY
+      if (currentScrollY < 10) {
+        navbarVisible.value = true
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        navbarVisible.value = true
+      } else {
+        // Scrolling down
+        navbarVisible.value = false
+      }
+      lastScrollY = currentScrollY
+      ticking = false
+    })
+    ticking = true
+  }
+}
+
+// Compute the style for the navbar to animate it smoothly
+const navbarStyle = computed(() => {
+  return {
+    transform: navbarVisible.value ? 'translateY(0)' : 'translateY(-100%)',
+    transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+    willChange: 'transform',
+  }
+})
+
 function toggleDropdown(title) {
   openDropdown.value = openDropdown.value === title ? null : title
 }
@@ -413,8 +458,14 @@ function handleClick(e) {
 
 onMounted(() => {
   document.addEventListener('click', handleClick)
+  window.addEventListener('scroll', onScroll)
 })
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClick)
+  window.removeEventListener('scroll', onScroll)
 })
 </script>
+
+<style>
+/* Add any additional styles here */
+</style>

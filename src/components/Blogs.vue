@@ -6,7 +6,7 @@
     <h2 class="text-2xl md:text-[32px] font-primary text-primary leading-snug font-bold mb-8">Insights That Move You Forward</h2>
 
     <!-- Blog Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
       
       <!-- Blog Card 1 -->
       <a href="#" class="group block overflow-hidden transition duration-300">
