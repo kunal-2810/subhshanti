@@ -1,6 +1,6 @@
 <template>
   <section class="bg-secondary-light py-12 px-2 sm:px-6 lg:px-0">
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto" :key="stateKey">
       <!-- Title -->
       <h2 class="text-2xl md:text-[32px] font-primary text-primary text-center leading-snug font-bold mb-8">Our Testimonials</h2>
       <!-- Testimonial Panels -->
@@ -88,9 +88,9 @@
         </div>
       </div>
       <!-- Dots Navigation -->
-      <div class="flex justify-center gap-4 mt-8">
+      <div class="flex justify-center gap-4 mt-8" :key="currentIndex">
         <button
-          v-for="(t, idx) in testimonials"
+          v-for="(_t, idx) in testimonials"
           :key="idx"
           @click="goTo(idx)"
           :class="[
@@ -146,7 +146,7 @@ const testimonials = [
   },
   {
     image: testimonialImage3,
-    videoUrl: 'https://www.youtube.com/watch?v=aqz-KE-bpKQ&t',
+    videoUrl: 'https://www.youtube.com/watch?v=u9lj-c29dxI&list=PL6B3937A5D230E335',
     feedback: 'Professional, trustworthy, and always available.',
     review:
       'Subhshanti’s team was always there to answer my queries and guide me through market ups and downs.',
@@ -172,9 +172,11 @@ function goTo(idx: number) {
 }
 
 function next() {
+  debugger;
   currentIndex.value = (currentIndex.value + 1) % testimonials.length
-  showVideo.value = false
-  resetInterval() // Ensure the slider resumes after advancing
+  stateKey.value = Math.random().toString(36).substring(2)
+  // Do not set showVideo.value = false here, handled in onPlayerStateChange
+  resetInterval()
 }
 
 function resetInterval() {
@@ -226,11 +228,16 @@ function loadYouTubeAPI() {
   })
 }
 
+const stateKey = ref<string>(Math.random().toString(36).substring(2))
+
 function onPlayerStateChange(event: any) {
   // 0 means ended
+  debugger;
   if (event.data === 0) {
+    // Advance to next testimonial (loops to first if at end)
+    next()
+    // After next(), set showVideo to false so the watcher resets the interval for the new testimonial
     showVideo.value = false
-    next() // This will advance to the next testimonial and reset the slider interval
   }
 }
 
