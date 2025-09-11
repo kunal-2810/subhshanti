@@ -109,19 +109,19 @@ const webinars = [
     image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&w=600&h=400&fit=crop',
     title: 'How to Navigate Market Volatility Like a Pro',
     duration: '32 min',
-    videoUrl: 'https://www.youtube.com/embed/aqz-KE-bpKQ?si=RCI4_NhtrW1s353Z'
+    videoUrl: 'https://www.youtube.com/embed/aqz-KE-bpKQ'
   },
   {
     image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&w=600&h=400&fit=crop',
     title: 'Building a Diversified Portfolio in 2025',
     duration: '28 min',
-    videoUrl: 'https://www.youtube.com/embed/aqz-KE-bpKQ?si=RCI4_NhtrW1s353Z'
+    videoUrl: 'https://www.youtube.com/embed/aqz-KE-bpKQ'
   },
   {
     image: 'https://images.pexels.com/photos/669365/pexels-photo-669365.jpeg?auto=compress&w=600&h=400&fit=crop',
     title: 'Retirement Planning: Strategies for High Earners',
     duration: '35 min',
-    videoUrl: 'https://www.youtube.com/embed/aqz-KE-bpKQ?si=RCI4_NhtrW1s353Z'
+    videoUrl: 'https://www.youtube.com/embed/aqz-KE-bpKQ'
   }
 ]
 
@@ -154,11 +154,14 @@ function stopSlider() {
 }
 
 function onPlayerStateChange(event: any) {
-  // 0 means ended
+  // 0 = ended, 2 = paused, 1 = playing
   if (event.data === 0) {
-    playing.value = false
-    // startSlider() will be called by the watcher
+    // When video ends, go to next webinar and resume slider
+    currentIndex.value = (currentIndex.value + 1) % webinars.length
+    playing.value = false // This will trigger the watcher to start the slider
   }
+  // If paused (event.data === 2), do nothing (slider remains paused)
+  // If playing (event.data === 1), do nothing (slider remains paused)
 }
 
 async function createYouTubePlayer() {
