@@ -141,6 +141,10 @@
         <div
           class="px-0 py-0 bg-white z-0"
           :style="menuListStyle"
+          ref="menuList"
+          tabindex="0"
+          @touchstart="onTouchStart"
+          @touchmove="onTouchMove"
         >
           <nav>
             <ul class="px-6 py-2">
@@ -483,6 +487,35 @@ function handleClick(e) {
     !e.target.closest('.shadow-lg')
   ) {
     openDropdown.value = null
+  }
+}
+
+const menuList = ref(null)
+let lastY = 0
+
+function onTouchStart(e) {
+  if (e.touches.length === 1) {
+    lastY = e.touches[0].clientY
+  }
+}
+
+function onTouchMove(e) {
+  if (!menuList.value) return
+  const el = menuList.value
+  const currentY = e.touches[0].clientY
+  const diffY = lastY - currentY
+  lastY = currentY
+
+  // Only scroll if content is overflowing
+  if (
+    (diffY > 0 && el.scrollTop + el.clientHeight < el.scrollHeight) ||
+    (diffY < 0 && el.scrollTop > 0)
+  ) {
+    e.stopPropagation()
+    // Let the browser handle the scroll
+  } else {
+    // Prevent scrolling the background
+    e.preventDefault()
   }
 }
 
