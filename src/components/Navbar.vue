@@ -10,7 +10,7 @@
         <img src="@/assets/images/logo.webp" alt="Logo" class="h-[68px] w-[160px]" />
       </div>
 
-      <!-- Desktop Menu -->
+      <!-- Desktop Menu (unchanged) -->
       <div class="hidden lg:flex items-center flex-1 justify-end space-x-8">
         <div class="flex space-x-6">
           <!-- What We Cover -->
@@ -28,30 +28,30 @@
             </button>
           </div>
           <!-- Mega Dropdown for "What We Cover" -->
-            <transition name="fade">
+          <transition name="fade">
+            <div
+              v-if="openDropdown === menus[0].title"
+              class="absolute left-0 top-full mt-1 w-screen max-w-none bg-white rounded-xl shadow-lg p-8 flex z-50 overflow-x-auto"
+              style="min-width:320px;"
+              @click.stop
+            >
               <div
-                v-if="openDropdown === menus[0].title"
-                class="absolute left-0 top-full mt-1 w-screen max-w-none bg-white rounded-xl shadow-lg p-8 flex z-50 overflow-x-auto"
-                style="min-width:320px;"
-                @click.stop
+                v-for="(col, idx) in menus[0].subMenus"
+                :key="col.title"
+                class="flex-1 min-w-[180px] max-w-[240px] px-4 mb-4"
+                :class="{'text-center': menus[0].subMenus.length < 4}"
               >
-                <div
-                  v-for="(col, idx) in menus[0].subMenus"
-                  :key="col.title"
-                  class="flex-1 min-w-[180px] max-w-[240px] px-4 mb-4"
-                  :class="{'text-center': menus[0].subMenus.length < 4}"
-                >
-                  <div class="font-semibold text-lg mb-2">{{ col.title }}</div>
-                  <ul>
-                    <li v-for="item in col.items" :key="item.label" class="py-1">
-                      <a :href="item.href" class="text-gray-700 hover:text-yellow-700 transition-colors">
-                        {{ item.label }}
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                <div class="font-semibold text-lg mb-2">{{ col.title }}</div>
+                <ul>
+                  <li v-for="item in col.items" :key="item.label" class="py-1">
+                    <a :href="item.href" class="text-gray-700 hover:text-yellow-700 transition-colors">
+                      {{ item.label }}
+                    </a>
+                  </li>
+                </ul>
               </div>
-            </transition>
+            </div>
+          </transition>
           <a href="#" class="text-lg font-medium text-gray-700 hover:text-yellow-700">About Us</a>
           <!-- Explore (WITH relative class) -->
           <div
@@ -109,7 +109,7 @@
           <img src="@/assets/icons/user.svg" alt="User Icon" class="w-5 h-5 mr-2" />
           Login
         </button>
-        <button @click="drawerOpen = true" class="ml-2 p-2 rounded-full hover:bg-gray-100">
+        <button @click="openDrawer" class="ml-2 p-2 rounded-full hover:bg-gray-100">
           <img src="@/assets/icons/menu.svg" alt="Menu Icon" class="w-7 h-7" />
         </button>
       </div>
@@ -126,105 +126,110 @@
     <transition name="slide">
       <aside
         v-if="drawerOpen"
-        class="fixed top-0 right-0 w-80 max-w-full h-full bg-white shadow-2xl z-50 flex flex-col"
+        class="fixed top-0 right-0 w-80 max-w-full h-screen bg-white shadow-2xl z-50 flex flex-col"
+        style="height: 100dvh; max-height: 100dvh;"
+        @touchmove.prevent
       >
-        <div class="flex items-center justify-between px-6 py-4 border-b">
+        <!-- Fixed Top: Menu Title and Close -->
+        <div ref="drawerHeader" class="flex items-center justify-between px-6 py-4 border-b bg-white flex-shrink-0 z-10">
           <span class="text-xl font-bold">Menu</span>
-          <button @click="drawerOpen = false" class="p-2 rounded-full hover:bg-gray-100">
+          <button @click="closeDrawer" class="p-2 rounded-full hover:bg-gray-100">
             <img src="@/assets/icons/close.svg" alt="Close Icon" class="w-6 h-6" />
           </button>
         </div>
-        <nav class="flex-1 overflow-y-auto px-6 py-2">
-          <ul>
-            <!-- What We Cover (mobile) -->
-            <li class="mb-2">
-              <div class="flex items-center justify-between py-2">
-                <a :href="mobileWhatWeCover.href || '#'" class="font-medium text-lg flex-1">{{ mobileWhatWeCover.title }}</a>
-                <button
-                  @click="toggleMobileMenu('What We Cover')"
-                  class="ml-2 p-1"
-                >
-                  <svg v-if="mobileOpenMenus.includes('What We Cover')" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"/>
-                  </svg>
-                  <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                  </svg>
-                </button>
-              </div>
-              <transition name="fade">
-                <div v-if="mobileOpenMenus.includes('What We Cover')" class="pl-2">
-                  <div
-                    v-for="col in mobileWhatWeCover.subMenus"
-                    :key="col.title"
-                    class="mb-2"
+        <!-- Scrollable Menu List -->
+        <div
+          class="px-0 py-0 bg-white z-0"
+          :style="menuListStyle"
+        >
+          <nav>
+            <ul class="px-6 py-2">
+              <!-- What We Cover (mobile) -->
+              <li class="mb-2">
+                <div class="flex items-center justify-between py-2">
+                  <a :href="mobileWhatWeCover.href || '#'" class="font-medium text-lg flex-1">{{ mobileWhatWeCover.title }}</a>
+                  <button
+                    @click="toggleMobileMenu('What We Cover')"
+                    class="ml-2 p-1"
+                    aria-label="Expand What We Cover"
                   >
-                    <div class="font-semibold text-lg my-2" v-if="col.title">{{ col.title }}</div>
-                    <ul>
-                      <li
-                        v-for="item in col.items"
-                        :key="item.label"
-                        class="text-base py-2"
-                      >
-                        <a :href="item.href" class="text-gray-700 hover:text-yellow-700 transition-colors">
-                          {{ item.label }}
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+                    <span v-if="mobileOpenMenus.includes('What We Cover')" class="text-2xl font-bold leading-none">-</span>
+                    <span v-else class="text-2xl font-bold leading-none">+</span>
+                  </button>
                 </div>
-              </transition>
-            </li>
-            <li class="mb-2">
-              <a href="#" class="block py-2 text-lg">About</a>
-            </li>
-            <!-- Explore (mobile) -->
-            <li class="mb-2">
-              <div class="flex items-center justify-between py-2">
-                <a :href="mobileExplore.href || '#'" class="font-medium text-lg flex-1">{{ mobileExplore.title }}</a>
-                <button
-                  @click="toggleMobileMenu('Explore')"
-                  class="ml-2 p-1"
-                >
-                  <svg v-if="mobileOpenMenus.includes('Explore')" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"/>
-                  </svg>
-                  <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                  </svg>
-                </button>
-              </div>
-              <transition name="fade">
-                <div v-if="mobileOpenMenus.includes('Explore')" class="pl-2">
-                  <div
-                    v-for="col in mobileExplore.subMenus"
-                    :key="col.title || col.items[0]?.label"
-                    class="mb-2"
+                <transition name="fade">
+                  <div v-if="mobileOpenMenus.includes('What We Cover')" class="pl-2">
+                    <div
+                      v-for="col in mobileWhatWeCover.subMenus"
+                      :key="col.title"
+                      class="mb-2"
+                    >
+                      <div class="font-semibold text-base my-2" v-if="col.title">{{ col.title }}</div>
+                      <ul>
+                        <li
+                          v-for="item in col.items"
+                          :key="item.label"
+                          class="text-base py-2"
+                        >
+                          <a :href="item.href" class="text-gray-700 hover:text-yellow-700 transition-colors">
+                            {{ item.label }}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </transition>
+              </li>
+              <!-- About -->
+              <li class="mb-2">
+                <a href="#" class="block py-2 text-lg">About</a>
+              </li>
+              <!-- Explore (mobile) -->
+              <li class="mb-2">
+                <div class="flex items-center justify-between py-2">
+                  <a :href="mobileExplore.href || '#'" class="font-medium text-lg flex-1">{{ mobileExplore.title }}</a>
+                  <button
+                    @click="toggleMobileMenu('Explore')"
+                    class="ml-2 p-1"
+                    aria-label="Expand Explore"
                   >
-                    <div class="font-semibold text-lg my-2" v-if="col.title">{{ col.title }}</div>
-                    <ul>
-                      <li
-                        v-for="item in col.items"
-                        :key="item.label"
-                        class="text-base py-2"
-                      >
-                        <a :href="item.href" class="text-gray-700 hover:text-yellow-700 transition-colors">
-                          {{ item.label }}
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+                    <span v-if="mobileOpenMenus.includes('Explore')" class="text-2xl font-bold leading-none">-</span>
+                    <span v-else class="text-2xl font-bold leading-none">+</span>
+                  </button>
                 </div>
-              </transition>
-            </li>
-            <!-- Other Menus -->
-            <li class="mb-2">
-              <a href="#" class="block py-2 text-lg font-medium text-purple">NRI Zone</a>
-            </li>
-          </ul>
-        </nav>
+                <transition name="fade">
+                  <div v-if="mobileOpenMenus.includes('Explore')" class="pl-2">
+                    <div
+                      v-for="col in mobileExplore.subMenus"
+                      :key="col.title || col.items[0]?.label"
+                      class="mb-2"
+                    >
+                      <div class="font-semibold text-base my-2" v-if="col.title">{{ col.title }}</div>
+                      <ul>
+                        <li
+                          v-for="item in col.items"
+                          :key="item.label"
+                          class="text-base py-2"
+                        >
+                          <a :href="item.href" class="text-gray-700 hover:text-yellow-700 transition-colors">
+                            {{ item.label }}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </transition>
+              </li>
+              <!-- Other Menus -->
+              <li class="mb-2">
+                <a href="#" class="block py-2 text-lg font-medium text-purple">NRI Zone</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
         <!-- Fixed Bottom Contact/Social -->
-        <div class="border-t px-6 py-4 bg-white">
+        <div ref="drawerFooter" class="border-t px-6 py-4 bg-white flex-shrink-0 z-10"
+             style="position: sticky; bottom: 0; background: white;">
           <div class="flex items-center mb-2">
             <img src="@/assets/icons/phone.svg" alt="Phone" class="w-6 h-6 mr-2" />
             <span class="font-medium text-gray-700">+91 12345 67890</span>
@@ -251,7 +256,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed, nextTick } from 'vue'
 
 // Desktop/Large menus (unchanged)
 const menus = [
@@ -392,49 +397,43 @@ const openDropdown = ref(null)
 const drawerOpen = ref(false)
 const mobileOpenMenus = ref([])
 
-// Sticky on scroll up logic with smooth transition
-const isSticky = ref(true)
-const navbarVisible = ref(true)
-const navbarOffset = ref(0)
-let lastScrollY = window.scrollY
-let ticking = false
+const drawerHeader = ref(null)
+const drawerFooter = ref(null)
+const menuListHeight = ref('auto')
 
-function onScroll() {
-  if (!ticking) {
-    window.requestAnimationFrame(() => {
-      const currentScrollY = window.scrollY
-      if (currentScrollY < 10) {
-        navbarVisible.value = true
-      } else if (currentScrollY < lastScrollY) {
-        // Scrolling up
-        navbarVisible.value = true
-      } else {
-        // Scrolling down
-        navbarVisible.value = false
-      }
-      lastScrollY = currentScrollY
-      ticking = false
-    })
-    ticking = true
-  }
+const updateMenuListHeight = () => {
+  nextTick(() => {
+    const headerH = drawerHeader.value?.offsetHeight || 0
+    const footerH = drawerFooter.value?.offsetHeight || 0
+    // Use 100dvh for viewport height (handles mobile browser bars)
+    menuListHeight.value = `calc(100dvh - ${headerH + footerH}px)`
+  })
 }
 
-// Compute the style for the navbar to animate it smoothly
-const navbarStyle = computed(() => {
-  return {
-    transform: navbarVisible.value ? 'translateY(0)' : 'translateY(-100%)',
-    transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-    willChange: 'transform',
-  }
-})
+const menuListStyle = computed(() => ({
+  height: menuListHeight.value,
+  overflowY: 'auto',
+  flex: '1 1 auto',
+  minHeight: 0,
+}))
 
-function toggleDropdown(title) {
-  openDropdown.value = openDropdown.value === title ? null : title
+function openDrawer() {
+  drawerOpen.value = true
+  document.body.style.overflow = 'hidden'
+  updateMenuListHeight()
+}
+function closeDrawer() {
+  drawerOpen.value = false
+  document.body.style.overflow = ''
 }
 
 function closeAll() {
   openDropdown.value = null
-  drawerOpen.value = false
+  closeDrawer()
+}
+
+function toggleDropdown(title) {
+  openDropdown.value = openDropdown.value === title ? null : title
 }
 
 function toggleMobileMenu(title) {
@@ -444,6 +443,37 @@ function toggleMobileMenu(title) {
     mobileOpenMenus.value.push(title)
   }
 }
+
+// Sticky on scroll up logic with smooth transition
+const navbarVisible = ref(true)
+let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0
+let ticking = false
+
+function onScroll() {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY
+      if (currentScrollY < 10) {
+        navbarVisible.value = true
+      } else if (currentScrollY < lastScrollY) {
+        navbarVisible.value = true
+      } else {
+        navbarVisible.value = false
+      }
+      lastScrollY = currentScrollY
+      ticking = false
+    })
+    ticking = true
+  }
+}
+
+const navbarStyle = computed(() => {
+  return {
+    transform: navbarVisible.value ? 'translateY(0)' : 'translateY(-100%)',
+    transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+    willChange: 'transform',
+  }
+})
 
 // Close dropdown on outside click (desktop)
 function handleClick(e) {
@@ -459,13 +489,12 @@ function handleClick(e) {
 onMounted(() => {
   document.addEventListener('click', handleClick)
   window.addEventListener('scroll', onScroll)
+  window.addEventListener('resize', updateMenuListHeight)
 })
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClick)
   window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('resize', updateMenuListHeight)
+  document.body.style.overflow = ''
 })
 </script>
-
-<style>
-/* Add any additional styles here */
-</style>

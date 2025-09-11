@@ -171,8 +171,7 @@ function goTo(idx: number) {
   resetInterval()
 }
 
-function next() {
-  debugger;
+function next() { 
   currentIndex.value = (currentIndex.value + 1) % testimonials.length
   stateKey.value = Math.random().toString(36).substring(2)
   // Do not set showVideo.value = false here, handled in onPlayerStateChange
@@ -232,7 +231,6 @@ const stateKey = ref<string>(Math.random().toString(36).substring(2))
 
 function onPlayerStateChange(event: any) {
   // 0 means ended
-  debugger;
   if (event.data === 0) {
     // Advance to next testimonial (loops to first if at end)
     next()
