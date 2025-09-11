@@ -243,10 +243,10 @@
             <span class="font-medium text-gray-700">info@subhshanti.com</span>
           </div>
           <div class="flex space-x-4 mt-4">
-            <a href="#" target="_blank"><img src="@/assets/icons/facebook.svg" class="w-6 h-6" /></a>
-            <a href="#" target="_blank"><img src="@/assets/icons/instagram.svg" class="w-6 h-6" /></a>
-            <a href="#" target="_blank"><img src="@/assets/icons/linkedin.svg" class="w-6 h-6" /></a>
-            <a href="#" target="_blank"><img src="@/assets/icons/youtube.svg" class="w-6 h-6" /></a>
+            <a href="#" target="_blank"><img src="@/assets/icons/facebook.svg" class="w-8 h-8" /></a>
+            <a href="#" target="_blank"><img src="@/assets/icons/instagram.svg" class="w-8 h-8" /></a>
+            <a href="#" target="_blank"><img src="@/assets/icons/linkedin.svg" class="w-8 h-8" /></a>
+            <a href="#" target="_blank"><img src="@/assets/icons/youtube.svg" class="w-8 h-8" /></a>
           </div>
         </div>
       </aside>

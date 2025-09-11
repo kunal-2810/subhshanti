@@ -135,7 +135,6 @@
   </section>
 
 
-
   <Research />
   <Testimonial />
   <Blogs />
@@ -146,7 +145,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import Research from '../components/Research.vue';
 import Blogs from '../components/Blogs.vue';
 import Newsletter from '../components/Newsletter.vue';
 import Resources from '../components/Resources.vue';
