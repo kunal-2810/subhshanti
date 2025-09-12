@@ -79,7 +79,7 @@
     <div class="flex flex-col lg:flex-row lg:h-[480px] h-auto">
       <!-- Panel 1 -->
       <a
-        href="#"
+        href="/the-first-crore"
         class="relative h-[320px] xs:h-[380px] md:h-[420px] lg:h-[480px] w-full lg:w-1/3 overflow-hidden group block"
       >
         <img
@@ -154,15 +154,15 @@ import Testimonial from '../components/Testimonial.vue';
 import Webinar from '../components/Webinar.vue';
 
 // Use different images for each device type
-import desktopBanner1 from '@/assets/images/banners/banner-1.webp';
-import desktopBanner2 from '@/assets/images/banners/banner-1.webp';
+import desktopBanner1 from '@/assets/images/banners/home/desktop-banner-1.webp';
+import desktopBanner2 from '@/assets/images/banners/home/desktop-banner-1.webp';
 
-import tabletBanner1 from '@/assets/images/banners/tablet-banner-1.webp';
-import tabletBanner2 from '@/assets/images/banners/tablet-banner-1.webp';
+import tabletBanner1 from '@/assets/images/banners/home/tablet-banner-1.webp';
+import tabletBanner2 from '@/assets/images/banners/home/tablet-banner-1.webp';
 
 // Placeholder for mobile banners (640x420)
-import mobileBanner1 from '@/assets/images/banners/mobile-banner-1.webp';
-import mobileBanner2 from '@/assets/images/banners/mobile-banner-1.webp';
+import mobileBanner1 from '@/assets/images/banners/home/mobile-banner-1.webp';
+import mobileBanner2 from '@/assets/images/banners/home/mobile-banner-1.webp';
 
 const desktopBanners = [
   desktopBanner1,

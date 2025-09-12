@@ -112,7 +112,7 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 import img1 from '@/assets/images/research/research-1.webp'
 import img2 from '@/assets/images/research/research-2.webp'
-import img3 from '@/assets/images/research/research-1.webp'
+import img3 from '@/assets/images/research/research-3.webp'
 
 const slides = [
   {

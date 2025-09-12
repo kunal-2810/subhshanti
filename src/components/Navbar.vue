@@ -4,7 +4,7 @@
     :class="[{ 'fixed top-0 left-0': true }]"
     :style="navbarStyle"
   >
-    <div class="w-full mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8">
+    <div class="w-full mx-auto flex items-center justify-between px-2 sm:px-6 lg:px-8">
       <!-- Logo -->
       <div class="flex-shrink-0 flex items-center py-2">
         <img src="@/assets/images/logo.webp" alt="Logo" class="h-[68px] w-[160px]" />
@@ -104,7 +104,7 @@
       </div>
 
       <!-- Mobile/Tablet Right Panel -->
-      <div class="flex items-center lg:hidden space-x-2">
+      <div class="flex items-center lg:hidden gap-0">
         <button class="flex items-center bg-primary text-white rounded-full px-5 py-2 shadow hover:bg-purple-800 transition">
           <img src="@/assets/icons/user.svg" alt="User Icon" class="w-5 h-5 mr-2" />
           Login
