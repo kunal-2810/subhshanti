@@ -3,8 +3,8 @@
     <div class="max-w-7xl mx-auto">
       <!-- Title & Description -->
       <div class="text-center mb-12">
-        <h2 class="text-2xl md:text-[32px] font-primary font-bold text-gray-800 mb-4">Webinars That Build Wealth</h2>
-        <p class="text-lg text-gray-600">
+        <h2 class="text-2xl md:text-[32px] font-primary text-primary font-bold mb-4">Webinars That Build Wealth</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
           Join our expert-led live sessions or explore our archive of deep-dive conversations on building, preserving, and growing wealth.
         </p>
       </div>

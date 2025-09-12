@@ -4,7 +4,7 @@
       <h2 class="text-2xl md:text-[32px] font-primary text-primary leading-snug font-bold mb-8">
         Stay Ahead with Wealth Insights
       </h2>
-      <p class="text-lg text-gray-600 mb-10">
+      <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
         Subscribe to receive actionable tips, financial wisdom, and investment ideas designed to grow with your goals.
       </p>
       <form

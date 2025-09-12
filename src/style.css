@@ -146,6 +146,23 @@ body {
   outline-offset: 2px;
 }
 
+/* Accent Color classes */
+.accent-primary {
+  accent-color: var(--color-primary);
+}
+
+.hover-accent-primary:hover {
+  accent-color: var(--color-primary-light);
+}
+
+.accent-secondary {
+  accent-color: var(--color-secondary);
+}
+
+.hover-accent-secondary:hover {
+  accent-color: var(--color-secondary-light);
+}
+
 /* Tailwind utility classes for navigation (global, not scoped) */
 
 .fade-enter-active, .fade-leave-active {

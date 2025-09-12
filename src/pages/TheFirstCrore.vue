@@ -74,68 +74,10 @@
     </div>
   </section>
 
-  <!-- Responsive Segment Section -->
-  <section class="w-full mx-auto">
-    <div class="flex flex-col lg:flex-row lg:h-[480px] h-auto">
-      <!-- Panel 1 -->
-      <a
-        href="#"
-        class="relative h-[320px] xs:h-[380px] md:h-[420px] lg:h-[480px] w-full lg:w-1/3 overflow-hidden group block"
-      >
-        <img
-          src="@/assets/images/segments/1crore.webp"
-          alt="The First Crore"
-          class="absolute inset-0 w-full h-full object-cover object-center"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#6E2B6B] via-[#6e2b6b38] to-transparent"></div>
-        <div class="absolute bottom-0 left-0 w-full p-6 text-white z-10 flex flex-col items-center justify-center text-center">
-          <h3 class="text-2xl font-bold mb-2">The First Crore</h3>
-          <span
-            class="inline-block mt-1 text-base font-medium transition group-hover:underline"
-          >Read More</span>
-        </div>
-      </a>
-      <!-- Panel 2 -->
-      <a
-        href="#"
-        class="relative h-[320px] xs:h-[380px] md:h-[420px] lg:h-[480px] w-full lg:w-1/3 overflow-hidden group block"
-      >
-        <img
-          src="@/assets/images/segments/10crore.webp"
-          alt="The 10 Cr Goal"
-          class="absolute inset-0 w-full h-full object-cover object-center"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#6E2B6B] via-[#6e2b6b38] to-transparent"></div>
-        <div class="absolute bottom-0 left-0 w-full p-6 text-white z-10 flex flex-col items-center justify-center text-center">
-          <h3 class="text-2xl font-bold mb-2">The 10 Cr Goal</h3>
-          <span
-            class="inline-block mt-1 text-base font-medium transition group-hover:underline"
-          >Read More</span>
-        </div>
-      </a>
-      <!-- Panel 3 -->
-      <a
-        href="#"
-        class="relative h-[320px] xs:h-[380px] md:h-[420px] lg:h-[480px] w-full lg:w-1/3 overflow-hidden group block"
-      >
-        <img
-          src="@/assets/images/segments/100crore.webp"
-          alt="100 + Cr and Beyond"
-          class="absolute inset-0 w-full h-full object-cover object-center"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#6E2B6B] via-[#6e2b6b38] to-transparent"></div>
-        <div class="absolute bottom-0 left-0 w-full p-6 text-white z-10 flex flex-col items-center justify-center text-center">
-          <h3 class="text-2xl font-bold mb-2">100 + Cr and Beyond</h3>
-          <span
-            class="inline-block mt-1 text-base font-medium transition group-hover:underline"
-          >Read More</span>
-        </div>
-      </a>
-    </div>
-  </section>
+  
 
 
-
+  <SipCalculator />
   <Research />
   <Testimonial />
   <Blogs />
@@ -146,6 +88,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import SipCalculator from '../components/SipCalculator.vue';
 import Research from '../components/Research.vue';
 import Blogs from '../components/Blogs.vue';
 import Newsletter from '../components/Newsletter.vue';
